@@ -2,11 +2,18 @@ import { create } from 'zustand';
 
 export type CustomPosition = 'front' | 'back' | 'leftArm' | 'rightArm';
 
+export interface DesignPosition {
+  x: number;
+  y: number;
+}
+
 export interface CustomPart {
   applied: boolean;
   imageFile: File | null;
   previewUrl: string | null;
   text: string;
+  position: DesignPosition;
+  scale: number;
 }
 
 export interface CustomDesignState {
@@ -19,6 +26,8 @@ export interface CustomDesignState {
   togglePart: (position: CustomPosition) => void;
   setPartImage: (position: CustomPosition, file: File | null) => void;
   setPartText: (position: CustomPosition, text: string) => void;
+  setPartPosition: (position: CustomPosition, pos: DesignPosition) => void;
+  setPartScale: (position: CustomPosition, scale: number) => void;
   resetPart: (position: CustomPosition) => void;
   resetAll: () => void;
   getAppliedParts: () => CustomPosition[];
@@ -30,6 +39,8 @@ const initialPart: CustomPart = {
   imageFile: null,
   previewUrl: null,
   text: '',
+  position: { x: 0, y: 0 },
+  scale: 1,
 };
 
 const CUSTOM_PRICE_PER_PART = 25000; // IDR 25,000 per part
@@ -72,6 +83,24 @@ export const useCustomDesignStore = create<CustomDesignState>((set, get) => ({
         ...state[position],
         text,
         applied: text.length > 0 || state[position].imageFile !== null,
+      },
+    }));
+  },
+
+  setPartPosition: (position, pos) => {
+    set((state) => ({
+      [position]: {
+        ...state[position],
+        position: pos,
+      },
+    }));
+  },
+
+  setPartScale: (position, scale) => {
+    set((state) => ({
+      [position]: {
+        ...state[position],
+        scale: Math.max(0.5, Math.min(2, scale)),
       },
     }));
   },

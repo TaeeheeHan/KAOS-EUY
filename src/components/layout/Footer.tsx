@@ -32,8 +32,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/custom-order" className="text-gray-300 hover:text-primary transition-colors">
-                  {t('footer.links.customOrder')}
+                <Link href="/order-lookup" className="text-gray-300 hover:text-primary transition-colors">
+                  {t('nav.orderLookup') || 'Order Lookup'}
                 </Link>
               </li>
               <li>
@@ -123,6 +123,13 @@ export default function Footer() {
           <p className="text-sm text-gray-400">
             &copy; {new Date().getFullYear()} {t('brand.name')} - {t('footer.copyright')}
           </p>
+          {/* Hidden admin link */}
+          <Link
+            href="/admin/login"
+            className="text-xs text-gray-600 hover:text-gray-400 mt-2 inline-block"
+          >
+            Admin
+          </Link>
         </div>
       </div>
     </footer>

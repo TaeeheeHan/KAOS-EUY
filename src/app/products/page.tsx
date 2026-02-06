@@ -5,25 +5,12 @@ import { motion } from 'framer-motion';
 import type { Product } from '@/types';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { getProducts } from '@/lib/mock-data';
-import { useCartStore } from '@/stores/cart';
 import { fadeInUp } from '@/lib/animations';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProductsPage() {
   const { t } = useLanguage();
   const [products] = useState<Product[]>(getProducts());
-  const addItem = useCartStore((state) => state.addItem);
-
-  const handleQuickAdd = (product: Product) => {
-    // Default to first size and color
-    const defaultSize = product.sizes[0];
-    const defaultColor = product.colors[0];
-
-    addItem(product, defaultSize, defaultColor, 1);
-
-    // TODO: Show toast notification
-    alert(t('products.addedToCart'));
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -44,7 +31,7 @@ export default function ProductsPage() {
         </motion.div>
 
         {/* Products Grid */}
-        <ProductGrid products={products} onQuickAdd={handleQuickAdd} />
+        <ProductGrid products={products} />
       </div>
     </div>
   );

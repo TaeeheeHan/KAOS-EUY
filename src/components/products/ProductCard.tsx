@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import type { Product } from '@/types';
 import { Badge } from '@/components/common/Badge';
 import { formatIDR } from '@/lib/utils';
@@ -12,14 +12,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface ProductCardProps {
   product: Product;
-  onQuickAdd?: (product: Product) => void;
-  variant?: 'default' | 'compact';
 }
 
 export function ProductCard({
   product,
-  onQuickAdd,
-  variant = 'default',
 }: ProductCardProps) {
   const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -124,18 +120,15 @@ export function ProductCard({
             )}
           </div>
 
-          {/* Quick Add Button */}
-          {product.in_stock && onQuickAdd && (
-            <button
-              onClick={() => onQuickAdd(product)}
-              className="w-full bg-primary text-white py-2.5 rounded-lg font-medium flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-primary/90"
+          {/* View Details Button */}
+          {product.in_stock ? (
+            <Link
+              href={`/products/${product.slug}`}
+              className="w-full bg-primary text-white py-2.5 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
             >
-              <ShoppingCart className="w-4 h-4" />
-              {t('products.addToCart')}
-            </button>
-          )}
-
-          {!product.in_stock && (
+              {t('products.viewDetails') || 'View Details'}
+            </Link>
+          ) : (
             <button
               disabled
               className="w-full bg-gray-200 text-gray-500 py-2.5 rounded-lg font-medium cursor-not-allowed"

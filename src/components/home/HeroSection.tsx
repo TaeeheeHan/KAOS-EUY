@@ -51,18 +51,18 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 pt-4"
             >
-              <Link href="/custom-order">
+              <Link href="/products">
                 <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                  {t('hero.orderCustom')} 👕
+                  {t('hero.viewCatalog')} 🛍️
                 </Button>
               </Link>
-              <Link href="/products">
+              <Link href="/order-lookup">
                 <Button
                   variant="outline"
                   size="lg"
                   className="w-full sm:w-auto"
                 >
-                  {t('hero.viewCatalog')} 🛍️
+                  {t('nav.orderLookup') || 'Track Order'} 📦
                 </Button>
               </Link>
             </motion.div>

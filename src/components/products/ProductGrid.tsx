@@ -3,10 +3,9 @@ import { ProductCard } from './ProductCard';
 
 export interface ProductGridProps {
   products: Product[];
-  onQuickAdd?: (product: Product) => void;
 }
 
-export function ProductGrid({ products, onQuickAdd }: ProductGridProps) {
+export function ProductGrid({ products }: ProductGridProps) {
   if (products.length === 0) {
     return (
       <div className="text-center py-20">
@@ -21,7 +20,6 @@ export function ProductGrid({ products, onQuickAdd }: ProductGridProps) {
         <ProductCard
           key={product.id}
           product={product}
-          onQuickAdd={onQuickAdd}
         />
       ))}
     </div>
